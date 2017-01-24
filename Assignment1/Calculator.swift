@@ -26,6 +26,7 @@ class Calculator {
         }
     }
     
+    //This method is responsible for defining the current operand
     func setOperand(operand: Double) {
         auxiliary = operand
         waitingOperand = false
@@ -33,6 +34,7 @@ class Calculator {
     
     
     
+    //This method treats the operations (=, +, -, etc)
     func doOperation(key: String) {
         switch key {
             case "AC":
@@ -40,6 +42,8 @@ class Calculator {
                 binaryOperationInfo = nil
                 waitingOperand = false
             case "%":
+                //Treatment for % operation.
+                //It varies if we already have a first operand defined or not.
                 if binaryOperationInfo == nil {
                     auxiliary = auxiliary / 100
                 } else {
@@ -89,6 +93,7 @@ class Calculator {
         }
     }
     
+    //Process a binary operation
     private func doBinaryOperation() {
         if binaryOperationInfo != nil && !waitingOperand {
             auxiliary = binaryOperationInfo!.operation(binaryOperationInfo!.firstOperand, auxiliary)
@@ -98,7 +103,7 @@ class Calculator {
     }
     
     
-    
+    //In house implementation for factorial calculation
     private func factorial(_ number: Double) -> Double {
         var result = 1.0
         if (number > 1) {
