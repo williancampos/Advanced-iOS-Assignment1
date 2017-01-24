@@ -1,6 +1,6 @@
 //
 //  ViewController.swift
-//  Assignment1
+//  Assignment1 (Advanced iOS Development - Calculator)
 //
 //  Created by Willian Campos on 2017-01-17.
 //  Copyright © 2017 Camponale. All rights reserved.
@@ -14,6 +14,7 @@ class ViewController: UIViewController {
     
     let calculator = Calculator()
     var typeInProgress = false
+    
     var displayValue: Double {
         get {
             return Double(displayLabel.text!)!
@@ -34,7 +35,7 @@ class ViewController: UIViewController {
     @IBAction func digitPressed(_ sender: UIButton) {
         let currentDigit  = sender.currentTitle!
         if (!typeInProgress) {
-            displayLabel.text = ""
+            displayLabel.text = currentDigit == "." ? calculator.waitingOperand ? "0" : displayLabel.text : ""
         }
         let newDisplayText = displayLabel.text! + currentDigit
         if newDisplayText != "0" {

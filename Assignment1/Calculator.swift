@@ -1,6 +1,6 @@
 //
 //  Calculator.swift
-//  Assignment1
+//  Assignment1 (Advanced iOS Development - Calculator)
 //
 //  Created by Willian Campos on 2017-01-21.
 //  Copyright © 2017 Camponale. All rights reserved.
@@ -17,6 +17,8 @@ class Calculator {
     
     var auxiliary = 0.0
     var binaryOperationInfo: BinaryOperationInfo?
+    var waitingOperand = false
+    var typeInProgress = false
     
     var result: Double {
         get {
@@ -26,42 +28,72 @@ class Calculator {
     
     func setOperand(operand: Double) {
         auxiliary = operand
+        waitingOperand = false
     }
+    
+    
     
     func doOperation(key: String) {
         switch key {
             case "AC":
                 auxiliary = 0
                 binaryOperationInfo = nil
-            case "sin": auxiliary = sin(auxiliary)
-            case "cos": auxiliary = cos(auxiliary)
-            case "tan": auxiliary = tan(auxiliary)
-            case "!": auxiliary = factorial(auxiliary)
-            case "√": auxiliary = sqrt(auxiliary)
-            case "π": auxiliary = M_PI
-            case "±": auxiliary = auxiliary * -1
+                waitingOperand = false
+            case "%":
+                if binaryOperationInfo == nil {
+                    auxiliary = auxiliary / 100
+                } else {
+                    auxiliary = binaryOperationInfo!.firstOperand * auxiliary / 100
+                }
+            case "sin":
+                auxiliary = sin(auxiliary)
+                waitingOperand = false
+            case "cos":
+                auxiliary = cos(auxiliary)
+                waitingOperand = false
+            case "tan":
+                auxiliary = tan(auxiliary)
+                waitingOperand = false
+            case "!":
+                auxiliary = factorial(auxiliary)
+                waitingOperand = false
+            case "√":
+                auxiliary = sqrt(auxiliary)
+                waitingOperand = false
+            case "π":
+                auxiliary = M_PI
+                waitingOperand = false
+            case "±":
+                auxiliary = auxiliary * -1
+                waitingOperand = false
             case "+":
                 doBinaryOperation()
                 binaryOperationInfo = BinaryOperationInfo(firstOperand: auxiliary, operation: {x, y in return x + y})
+                waitingOperand = true
             case "-":
                 doBinaryOperation()
                 binaryOperationInfo = BinaryOperationInfo(firstOperand: auxiliary, operation: {x, y in return x - y})
+                waitingOperand = true
             case "×":
                 doBinaryOperation()
                 binaryOperationInfo = BinaryOperationInfo(firstOperand: auxiliary, operation: {x, y in return x * y})
+                waitingOperand = true
             case "÷":
                 doBinaryOperation()
                 binaryOperationInfo = BinaryOperationInfo(firstOperand: auxiliary, operation: {x, y in return x / y})
+                waitingOperand = true
             case "=":
+                waitingOperand = false
                 doBinaryOperation()
             default: break
         }
     }
     
     private func doBinaryOperation() {
-        if binaryOperationInfo != nil {
+        if binaryOperationInfo != nil && !waitingOperand {
             auxiliary = binaryOperationInfo!.operation(binaryOperationInfo!.firstOperand, auxiliary)
             binaryOperationInfo = nil
+            waitingOperand = false
         }
     }
     

@@ -1,13 +1,16 @@
 //
 //  AppDelegate.swift
-//  Assignment1
+//  Assignment1 (Advanced iOS Development - Calculator)
 //
 //  Created by Willian Campos on 2017-01-17.
+//  Student ID: 300879280
 //  Copyright © 2017 Camponale. All rights reserved.
 //
 
 import UIKit
 
+// This application is a basic calculator with some more complex features (as square root, factorial, eg.)
+// It is implemented as the Assignment 1 for the iOS Advanced Development Course of the Mobile Application Development Program at Centennial College.
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
